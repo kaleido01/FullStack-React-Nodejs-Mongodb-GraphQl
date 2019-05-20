@@ -1,8 +1,8 @@
 module.exports = {
 	client: {
 		service: {
-			name: "react-recipe",
-			url: "http://localhost:4444/graphql"
+			name: "sample-graphql-app",
+			url: "http://localhost:4444/graphiql"
 		},
 		includes: ["*.graphql"]
 	}

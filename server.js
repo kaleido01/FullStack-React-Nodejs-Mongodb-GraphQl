@@ -12,7 +12,7 @@ const { graphiqlExpress, graphqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
 const { typeDefs } = require("./schema.graphql");
-const { resolvers } = require("./resolvers.graphql");
+const { resolvers } = require("./resolvers");
 
 const schema = makeExecutableSchema({
 	typeDefs,
@@ -36,6 +36,7 @@ app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 //Connect schema with GraphQL
 app.use(
 	"/graphql",
+	bodyParser(),
 	graphqlExpress({
 		schema,
 		context: {
