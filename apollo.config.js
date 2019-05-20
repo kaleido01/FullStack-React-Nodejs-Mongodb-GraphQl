@@ -1,9 +1,9 @@
 module.exports = {
 	client: {
 		service: {
-			name: "sample-graphql-app",
-			url: "http://localhost:4444/graphiql"
-		},
+      endpoint: {
+        url: "http://localhost:4000"
+      }
 		includes: ["*.graphql"]
 	}
 };
