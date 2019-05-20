@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 
 require("dotenv").config({ path: "./variables.env" });
@@ -29,6 +30,13 @@ mongoose
 	});
 
 const app = express();
+
+//クロスドメインからのアクセスを許可するためのパケ
+const corsOptions = {
+	origin: "http://localhost:3000",
+	credentials: true
+};
+app.use(cors(corsOptions));
 
 //create GrapQL application
 app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
