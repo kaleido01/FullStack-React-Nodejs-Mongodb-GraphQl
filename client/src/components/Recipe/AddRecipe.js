@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
-import { ADD_RECIPE, GET_ALL_RECIPES } from "./../../queries/index";
+import {
+	ADD_RECIPE,
+	GET_ALL_RECIPES,
+	GET_USER_RECIPES
+} from "./../../queries/index";
 import Error from "./../Error";
 import withAuth from "./../withAuth";
 
@@ -68,6 +72,7 @@ class AddRecipe extends Component {
 			<Mutation
 				update={this.updateCache}
 				mutation={ADD_RECIPE}
+				refetchQueries={[{ query: GET_USER_RECIPES, variables: { username } }]}
 				variables={{ name, instructions, category, description, username }}>
 				{(addRecipe, { data, loading, error }) => {
 					return (
