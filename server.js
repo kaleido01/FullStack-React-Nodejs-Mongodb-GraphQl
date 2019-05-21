@@ -12,7 +12,7 @@ const User = require("./models/User");
 const { graphiqlExpress, graphqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
-const { typeDefs } = require("./schema");
+const { typeDefs } = require("./schema.gql");
 const { resolvers } = require("./resolvers");
 
 const schema = makeExecutableSchema({
