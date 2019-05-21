@@ -1,35 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Query } from "react-apollo";
+import { ApolloConsumer } from "react-apollo";
 import { SEARCH_RECIPES } from "./../../queries/index";
+import SearchItem from "./SearchItem";
 
-const Search = () => {
-	return (
-		<Query query={SEARCH_RECIPES} variables={{ searchTerm: "" }}>
-			{({ data, loading, error }) => {
-				if (loading) return <div>loading</div>;
-				if (error) return <div>error</div>;
-				console.log(data);
-				return (
+class Search extends React.Component {
+	state = {
+		searchResults: []
+	};
+	handleChange = ({ searchRecipes }) => {
+		this.setState({ searchResults: searchRecipes });
+	};
+	render() {
+		const { searchResults } = this.state;
+		return (
+			<ApolloConsumer>
+				{client => (
 					<div className="App">
-						<input type="search" />
+						<input
+							type="search"
+							placeholder="Search for Recipes"
+							onChange={async event => {
+								event.persist();
+								const { data } = await client.query({
+									query: SEARCH_RECIPES,
+									variables: { searchTerm: event.target.value }
+								});
+								this.handleChange(data);
+							}}
+						/>
 						<ul>
-							{data.searchRecipes.map(recipe => (
-								<li key={recipe._id}>
-									<Link to={`/recipes/${recipe._id}`}>
-										<h4> {recipe.name}</h4>
-									</Link>
-									<p>
-										<strong> {recipe.likes}</strong>
-									</p>
-								</li>
+							{searchResults.map(recipe => (
+								<SearchItem key={recipe._id} {...recipe} />
 							))}
 						</ul>
 					</div>
-				);
-			}}
-		</Query>
-	);
-};
+				)}
+			</ApolloConsumer>
+		);
+	}
+}
 
 export default Search;
