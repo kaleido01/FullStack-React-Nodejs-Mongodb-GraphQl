@@ -1,9 +1,23 @@
 import React, { Component } from "react";
 
 class AddRecipe extends Component {
-	handleChange = () => {};
+	state = {
+		name: "",
+		instructions: "",
+		category: "Breakfast",
+		description: "",
+		username: ""
+	};
+
+	handleChange = event => {
+		const { name, value } = event.target;
+		this.setState({
+			[name]: value
+		});
+	};
 
 	render() {
+		const { name, instructions, category, description, username } = this.state;
 		return (
 			<div className="App">
 				<h2 className="App">Add Recipe</h2>
@@ -13,11 +27,13 @@ class AddRecipe extends Component {
 						name="name"
 						placeholder="Recipe Name"
 						onChange={this.handleChange}
+						value={name}
 					/>
 					<select
 						name="category"
 						placeholder="Recipe Name"
-						onChange={this.handleChange}>
+						onChange={this.handleChange}
+						value={category}>
 						<option value="Breakfast">Breakfast</option>
 						<option value="Lunch">Lunch</option>
 						<option value="Dinner">Dinner</option>
@@ -28,11 +44,13 @@ class AddRecipe extends Component {
 						name="description"
 						placeholder="Add description"
 						onChange={this.handleChange}
+						value={description}
 					/>
 					<textarea
 						name="instructions"
 						placeholder="Add instructions"
 						onChange={this.handleChange}
+						value={instructions}
 					/>
 					<button type="submit" className="button-primary">
 						Submit
