@@ -80,6 +80,13 @@ export const DELETE_USER_RECIPE = gql`
 		}
 	}
 `;
+export const LIKE_RECIPE = gql`
+	mutation likeRecipe($_id: ID!, $username: String!) {
+		likeRecipe(_id: $_id, username: $username) {
+			likes
+		}
+	}
+`;
 
 //User queries
 
