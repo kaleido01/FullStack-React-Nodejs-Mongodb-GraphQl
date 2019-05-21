@@ -13,6 +13,10 @@ exports.resolvers = {
 			const allRecipes = await Recipe.find();
 			return allRecipes;
 		},
+		getRecipe: async (rott, { _id }, { Recipe }) => {
+			const recipe = await Recipe.findById(_id);
+			return recipe;
+		},
 		getCurrentUser: async (root, args, { User, currentUser }) => {
 			if (!currentUser) {
 				return null;
