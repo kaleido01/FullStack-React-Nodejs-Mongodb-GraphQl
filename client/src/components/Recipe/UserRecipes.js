@@ -1,7 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Query } from "react-apollo";
-import { GET_USER_RECIPES } from "../../queries";
+import { Query, Mutation } from "react-apollo";
+import { GET_USER_RECIPES, DELETE_USER_RECIPE } from "../../queries";
+
+const handleDelete = deleteUserRecipe => {
+	const confirmDelete = window.confirm(
+		"Are you sure you want to delete this recipe?"
+	);
+	if (confirmDelete) {
+		deleteUserRecipe().then(({ data }) => {
+			console.log(data);
+		});
+	}
+};
 
 const UserRecipes = ({ username }) => {
 	return (
@@ -20,6 +31,19 @@ const UserRecipes = ({ username }) => {
 									<p>{recipe.name}</p>
 								</Link>
 								<p>likes: {recipe.likes}</p>
+								<Mutation
+									mutation={DELETE_USER_RECIPE}
+									variables={{ _id: recipe._id }}>
+									{(deleteUserRecipe, { data, loading, error }) => {
+										return (
+											<p
+												onClick={() => handleDelete(deleteUserRecipe)}
+												className="delete-button">
+												X
+											</p>
+										);
+									}}
+								</Mutation>
 							</li>
 						))}
 					</ul>
