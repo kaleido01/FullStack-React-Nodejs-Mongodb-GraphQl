@@ -13,9 +13,19 @@ exports.resolvers = {
 			const allRecipes = await Recipe.find().sort({ createdDate: "desc" });
 			return allRecipes;
 		},
-		getRecipe: async (rott, { _id }, { Recipe }) => {
+		getRecipe: async (root, { _id }, { Recipe }) => {
 			const recipe = await Recipe.findById(_id);
 			return recipe;
+		},
+		searchRecipes: async (root, { searchTerm }, { Recipe }) => {
+			if (searchTerm) {
+			} else {
+				const recipes = await Recipe.find().sort({
+					likes: "desc",
+					createdDate: "desc"
+				});
+				return recipes;
+			}
 		},
 		getCurrentUser: async (root, args, { User, currentUser }) => {
 			if (!currentUser) {
