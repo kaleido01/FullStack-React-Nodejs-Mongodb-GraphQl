@@ -6,31 +6,55 @@ import { LIKE_RECIPE } from "./../../queries/index";
 
 export class LikeRecipe extends Component {
 	state = {
-		username: ""
+		username: "",
+		liked: false
 	};
 
 	componentDidMount() {
 		if (this.props.session.getCurrentUser) {
-			const { username } = this.props.session.getCurrentUser;
-			this.setState({ username });
+			const { username, favorites } = this.props.session.getCurrentUser;
+			const { _id } = this.props;
+			console.log(this.props.session.getCurrentUser);
+			console.log(favorites);
+			//userのfavoritesの中にコンポーネントが表示しているレシピのIdがある場合true
+			const prevLiked =
+				favorites.findIndex(favorite => favorite._id === _id) > -1;
+
+			this.setState({ username, liked: prevLiked });
 		}
 	}
 
 	handleLike = likeRecipe => {
-		likeRecipe().then(({ data }) => {
-			console.log(data);
-		});
+		if (this.state.liked) {
+			likeRecipe().then(async ({ data }) => {
+				console.log(data);
+				await this.props.refetch();
+			});
+		} else {
+			console.log("unlike");
+		}
+	};
+
+	handleClick = likeRecipe => {
+		this.setState(
+			prevState => ({
+				liked: !prevState.liked
+			}),
+			() => this.handleLike(likeRecipe)
+		);
 	};
 
 	render() {
-		const { username } = this.state;
+		const { username, liked } = this.state;
 		const { _id } = this.props;
 		return (
 			<Mutation mutation={LIKE_RECIPE} variables={{ _id, username }}>
 				{likeRecipe => {
 					return (
 						username && (
-							<button onClick={() => this.handleLike(likeRecipe)}>like</button>
+							<button onClick={() => this.handleClick(likeRecipe)}>
+								{liked ? "Liked" : "Like"}
+							</button>
 						)
 					);
 				}}
