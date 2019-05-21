@@ -34,6 +34,8 @@ export class Signup extends Component {
 		event.preventDefault();
 		signupUser().then(data => {
 			console.log(data);
+			localStorage.setItem("token", data.sigupUser.token);
+
 			this.clearState();
 		});
 	};

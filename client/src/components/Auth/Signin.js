@@ -29,8 +29,9 @@ export class Signin extends Component {
 
 	handleSubmit = (event, signinUser) => {
 		event.preventDefault();
-		signinUser().then(data => {
+		signinUser().then(({ data }) => {
 			console.log(data);
+			localStorage.setItem("token", data.signinUser.token);
 			this.clearState();
 		});
 	};
