@@ -17,6 +17,12 @@ exports.resolvers = {
 			const recipe = await Recipe.findById(_id);
 			return recipe;
 		},
+		getUserRecipes: async (root, { username }, { Recipe }) => {
+			const userRecipes = await Recipe.find({ username }).sort({
+				createDate: "desc"
+			});
+			return userRecipes;
+		},
 		searchRecipes: async (root, { searchTerm }, { Recipe }) => {
 			if (searchTerm) {
 				const searchResults = await Recipe.find(

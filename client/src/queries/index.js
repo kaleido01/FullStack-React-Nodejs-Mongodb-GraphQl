@@ -10,6 +10,15 @@ export const GET_ALL_RECIPES = gql`
 		}
 	}
 `;
+export const GET_USER_RECIPES = gql`
+	query getUserRecipes($username: String!) {
+		getUserRecipes(username: $username) {
+			_id
+			name
+			likes
+		}
+	}
+`;
 
 export const GET_RECIPE = gql`
 	query getRecipe($_id: ID!) {
