@@ -42,6 +42,7 @@ type Token{
 
 type Query{
   getAllRecipes:[Recipe]
+  getCurrentUser:User
 
 }
 
