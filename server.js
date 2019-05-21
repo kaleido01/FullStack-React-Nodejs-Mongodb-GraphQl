@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config({ path: "./variables.env" });
 
@@ -42,7 +43,14 @@ app.use(cors(corsOptions));
 
 app.use(async (req, res, next) => {
 	const token = req.headers["authorization"];
-	console.log(token);
+	if (token !== null) {
+		try {
+			const currentUser = await jwt.verify(token, process.env.SECRET);
+			console.log(currentUser);
+		} catch (err) {
+			console.error(err);
+		}
+	}
 	next();
 });
 
