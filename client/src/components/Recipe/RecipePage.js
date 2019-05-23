@@ -6,13 +6,11 @@ import LikeRecipe from "./LikeRecipe";
 
 const RecipePage = ({ match }) => {
 	const { _id } = match.params;
-	console.log(_id);
 	return (
 		<Query query={GET_RECIPE} variables={{ _id }}>
 			{({ data, loading, error }) => {
 				if (loading) return <div>Loading</div>;
 				if (error) return <div>Error</div>;
-				console.log(data);
 				return (
 					<div className="App">
 						<h2>{data.getRecipe.name}</h2>

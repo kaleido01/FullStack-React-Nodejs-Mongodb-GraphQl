@@ -13,9 +13,7 @@ const handleDelete = deleteUserRecipe => {
 		"Are you sure you want to delete this recipe?"
 	);
 	if (confirmDelete) {
-		deleteUserRecipe().then(({ data }) => {
-			console.log(data);
-		});
+		deleteUserRecipe().then(({ data }) => {});
 	}
 };
 

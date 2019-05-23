@@ -14,8 +14,6 @@ export class LikeRecipe extends Component {
 		if (this.props.session.getCurrentUser) {
 			const { username, favorites } = this.props.session.getCurrentUser;
 			const { _id } = this.props;
-			console.log(this.props.session.getCurrentUser);
-			console.log(favorites);
 			//userのfavoritesの中にコンポーネントが表示しているレシピのIdがある場合true
 			const prevLiked =
 				favorites.findIndex(favorite => favorite._id === _id) > -1;
@@ -27,12 +25,10 @@ export class LikeRecipe extends Component {
 	handleLike = (likeRecipe, unlikeRecipe) => {
 		if (this.state.liked) {
 			likeRecipe().then(async ({ data }) => {
-				console.log(data);
 				await this.props.refetch();
 			});
 		} else {
 			unlikeRecipe().then(async ({ data }) => {
-				console.log(data);
 				await this.props.refetch();
 			});
 		}
